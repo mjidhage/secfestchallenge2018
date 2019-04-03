@@ -1,0 +1,53 @@
+Creating an IoT security challenge - the second year
+
+Intro
+First year we created a challange using three nodeMCU's.
+SOLUTION: The intended way to solve the puzzle
+
+Step 1. Look at the debug display of sensor 1. It's is possible to find clues to  patterns of valid SSIDs that the sensor will connect to. Create an adhoc network on your phone matching the pattern. That enables the sensor 1 to try to connect to the wifi. 
+Step 2. Sensor 1 uses a preshared password. Find the passwords that are valid. There are some hints in the debug. 
+Step 3. Sensor 1 connects to the mqtt server and the hostname is revealed in the debug display.
+Step 4. Connect to the host using MQTT client - read # to find information on how to enable the led on S2.
+Step 5. Messages to S3 are “encrypted”. Find out how and enable led on S3.
+
+
+User story
+As an attacker/attendant at a security conference, I would like to participate in a pretty easy CTF-like challenge in a vendor booth without using any other tools except the smart phone. 
+
+Breakdown
+
+A typical smartphone has wifi, bt, cellular data, SMS and the possibility to make calls.
+Verified 'tools'
+SSH-terminal
+Hotspot/internet sharing
+MQTT client
+LightBlue BT app
+
+An intercepting proxy for iOS/Android would be nice but nothing found.
+
+
+Draft
+BT, wifi, servers located on internet possible to use. 
+nodeMCU8266 has BT
+
+Device logic: opportunistic use of wifi - post data, get instructions. use bt to create local mesh?
+Symmetric 'secret' stored in all devices? some BT coms open, https to server using mutual certs?
+bt device with connection to dashboard broadcast that info to mesh together with path cost?
+
+MQTT would be nice. #-channel is fun and has security impact. Using self-signed certificates also fun
+Investigate BT - interaction possible or only listen to beacons? How many devices can connect to target at one time?
+OTA?
+
+Toolset very limited - investigate use SSID/pass and monitor feedback? 
+
+Perhaps multiple NodeMCUs? Acting as client and server
+Last flag is to start siren/blinkenlights or somthin’
+
+
+Display server dashboard - 'on the internet'? Found via VNC roluette/shodan. Some info leaked, perhaps a real world URL and a product name? Google it to find more about the solution (perhaps on gihub - our account) - 'datasheet'
+
+=> Capabilities are BT/mesh and wifi/mqtt
+
+=> Intercept/listen to bt to find some secret. Use it to inject a command or somethin'
+
+=> Endgame is to send MQTT to server and make dashbord 'ACT'. Find secret and find hostname
